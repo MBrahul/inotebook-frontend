@@ -1,14 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import noteContext from '../context/notes/NoteContext'
 
 
-
 export default function Login() {
- 
     const context = useContext(noteContext);
     const { verifyUser } = context;
-
     const [user, setUser] = useState({
         email: "",
         password: ''
@@ -18,16 +15,19 @@ export default function Login() {
         setUser({ ...user, [e.target.name]: e.target.value });
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async(e) => {
         e.preventDefault();
-        verifyUser(user.email, user.password);
-        setUser({
-            email: "",
-            password: ""
-        });
-        
-     
-
+        const login = await verifyUser(user.email, user.password);
+        if (login) {
+            setUser({
+                email: "",
+                password: ""
+            });
+           window.location.reload();
+        }
+        else {
+            alert("Login With Correct Credentails");
+        }
     }
     return (
         <div className="container my-3">

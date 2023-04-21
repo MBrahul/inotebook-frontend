@@ -1,28 +1,30 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
     Link,
     useLocation
 } from "react-router-dom";
-import noteContext from '../context/notes/NoteContext';
+
 
 export default function Navbar() {
-
-    const context = useContext(noteContext);
-    const { login,userName } = context;
-
+    const login = window.localStorage.getItem("isLoggedIn");
     let location = useLocation();
 
     React.useEffect(() => {
 
     }, [location]);
 
-const checklogin=(login)=>{
-    if(login===true){
-        return   <Link to="" className='link-dark mx-2' style={{color:'white',textDecoration:"none"}}><i className="fa-solid fa-user mx-2"></i>Hello ,{userName}
-        </Link>
+    const handleLogOut = () => {
+        window.localStorage.clear();
+        window.location.reload();
     }
-   
-}
+
+    const checklogin = (login) => {
+        if (login) {
+            return <Link to="" className='link-dark mx-2' style={{ color: 'white', textDecoration: "none" }}><i className="fa-solid fa-right-from-bracket" onClick={handleLogOut} ></i>
+            </Link>
+        }
+
+    }
 
     return (
         <div>
@@ -33,9 +35,6 @@ const checklogin=(login)=>{
                         fontFamily: 'Tangerine',
                         fontSize: "36px"
                     }}>iNotebook</Link>
-                    {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button> */}
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -57,7 +56,7 @@ const checklogin=(login)=>{
                     <div>
 
                         {checklogin(login)}
-                      
+
 
                     </div>
                 </div>

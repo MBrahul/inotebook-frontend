@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import noteContext from "./NoteContext";
 
 const NoteState = (props) => {
-  const host = "https://inotebook-backend-6x50.onrender.com"
+  const host = "https://inotebook-backend-4sb9.onrender.com"
+  // const host ="http://localhost:4000";
   const s1 = []
-
-  const [login, setLogin] = useState(false);
-  const [token, setToken] = useState("");
-  const [userName, setUserName]=useState("");
-
   const [notes, setNotes] = useState(s1);
+
+
   //add a new user
 
   const addUser = async(name, email, password) => {
@@ -27,15 +25,14 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     if (json.created) {
-      console.log(json);
-      setLogin(true);
-      setToken(json.token);
-      // return redirect("/");
+      localStorage.setItem("isLoggedIn",true);
+      localStorage.setItem("token",json.token);
+      localStorage.setItem("userName",json.name);
+      return true;
     }
     else {
-      // return redirect('/signIn');
+     return false;
     }
-    setUserName(name);
   }
 
   // login a user
@@ -54,20 +51,19 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     if (json.login) {
-      console.log(json);
-      setLogin(true);
-      setToken(json.token);
-      setUserName(json.name);
-      // return redirect("/");
+      localStorage.setItem("isLoggedIn",true);
+      localStorage.setItem("token",json.token);
+      localStorage.setItem("userName",json.name);
+      return true;
     }
     else {
-      // return redirect('/login');
+     return false;
     }
   }
 
   //fatch all notes form db
   const getNotes = async () => {
-
+    const token = window.localStorage.getItem("token");
     const response = await fetch(`${host}/api/note/fatchAllNotes`, {
       method: "GET",
       headers: { 'content-type': 'application/json', 'auth-token': token },
@@ -80,7 +76,7 @@ const NoteState = (props) => {
 
   //add a note
   const addNote = async (title, description, tag, bcolour) => {
-
+    const token = window.localStorage.getItem("token");
     let random = Math.floor(Math.random() * 5);
     if (random === 0) { bcolour = '#46E39A' }
     else if (random === 1) { bcolour = '#FA42BD' }
@@ -110,6 +106,7 @@ const NoteState = (props) => {
   //delete a note
 
   const deleteNote = async (id) => {
+    const token = window.localStorage.getItem("token");
     await fetch(`${host}/api/note/deleteNote/${id}`, {
       method: 'DELETE',
       headers: { 'auth-token': token }
@@ -119,6 +116,7 @@ const NoteState = (props) => {
 
   // edit a note
   const editNote = async (newTitle, newTag, newDescription, id) => {
+    const token = window.localStorage.getItem("token");
     let newNote = {
       title: newTitle,
       description: newDescription,
@@ -138,7 +136,7 @@ const NoteState = (props) => {
 
 
   return (
-    <noteContext.Provider value={{ notes, setNotes, addNote, editNote, deleteNote, getNotes, login, setLogin, verifyUser ,addUser,userName,setUserName}}>
+    <noteContext.Provider value={{ notes, setNotes, addNote, editNote, deleteNote, getNotes, verifyUser ,addUser}}>
       {props.children}
 
     </noteContext.Provider>

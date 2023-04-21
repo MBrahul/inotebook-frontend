@@ -5,24 +5,28 @@ const AddNote = () => {
 
   const context = useContext(noteContext);
   const { addNote } = context;
-
-  const [note, setNote] = useState({title:'',tag:'',description:''});
+  const userName=window.localStorage.getItem("userName");
+  const [note, setNote] = useState({ title: '', tag: '', description: '' });
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
 
   }
   const handleAdd = (e) => {
     e.preventDefault();
-    addNote(note.title, note.description, note.tag,'cyan');
+    addNote(note.title, note.description, note.tag, 'cyan');
     setNote({
       title: "",
-      tag: "", description: ''
+      tag: "",
+      description: ''
     });
   }
-  
+
   return (
     <div className='container my-3'>
-
+      <h5 className='text-center' style={{
+        fontFamily: 'Tangerine',
+        fontSize: "36px"
+      }} >Hello {userName}</h5>
       <form>
 
         <div className="mb-3">
@@ -45,7 +49,7 @@ const AddNote = () => {
         </div>
 
         <button type="submit" className="btn btn-outline-primary" onClick={handleAdd}>Add This Note</button>
-       
+
 
       </form>
 

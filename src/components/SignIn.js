@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react'
 import noteContext from '../context/notes/NoteContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
     const context = useContext(noteContext);
     const { addUser } = context;
+    const nav = useNavigate();
 
     const [data, setData] = useState({
         name: '',
@@ -22,14 +24,19 @@ export default function SignIn() {
             alert('password and confirm-password does not match');
         }
         else {
-            addUser(data.name, data.email, data.password);
-            console.log('user successfully created');
-            setData({
-                name: '',
-                email: '',
-                password: '',
-                confirm_password: ""
-            });
+           const success= addUser(data.name, data.email, data.password);
+            if(success){
+                setData({
+                    name: '',
+                    email: '',
+                    password: '',
+                    confirm_password: ""
+                });
+                nav("/");
+            }
+            else{
+                alert("Error");
+            }
         }
 
 

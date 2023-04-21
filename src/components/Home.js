@@ -1,13 +1,10 @@
-import React, { useContext } from 'react'
-import noteContext from '../context/notes/NoteContext';
 import AddNote from './AddNote';
 import Notes from './Notes';
 import Login from './Login';
 
 
 export default function Home() {
-  const context = useContext(noteContext);
-  const { login } = context;
+  const login = localStorage.getItem("isLoggedIn");
 
   const checklogin = (login) => {
     if (login) {
