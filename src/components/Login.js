@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import loading from './loading.gif'
 import noteContext from '../context/notes/NoteContext'
 
 
@@ -10,12 +11,14 @@ export default function Login() {
         email: "",
         password: ''
     });
+    const [spinner , setSpinner]=useState(false);
 
     const onChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     }
 
     const handleLogin = async(e) => {
+        setSpinner(true);
         e.preventDefault();
         const login = await verifyUser(user.email, user.password);
         if (login) {
@@ -24,9 +27,11 @@ export default function Login() {
                 password: ""
             });
            window.location.reload();
+           setSpinner(false);
         }
         else {
             alert("Login With Correct Credentails");
+            setSpinner(false);
         }
     }
     return (
@@ -51,7 +56,9 @@ export default function Login() {
                     <input type="password" className="form-control" id="exampleInputPassword1" name='password' value={user.password} onChange={onChange} />
                 </div>
 
-                <button type="submit" className="btn btn-primary" onClick={handleLogin}>Log In</button>
+                {/* <button type="submit" className="btn btn-primary" onClick={handleLogin}>Log In</button> */}
+                <button type="submit" className="btn btn-primary" onClick={handleLogin}>Log In { spinner? <img src={loading} alt="loading" />:null}</button>
+               
                 <p className='my-3' style={{
                     "display": "block",
                     "margin": "5px 0px"
