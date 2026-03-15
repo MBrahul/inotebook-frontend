@@ -11,7 +11,7 @@ export default function Notes() {
   const [currentNote, setCurrentNote] = useState({ title: "", description: "", tag: "" });
 
   useEffect(() => {
-    getNotes(); // eslint-disable-next-line react-hooks/exhaustive-deps
+    getNotes();
     setLoading(false);
   }, [])
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function NoteItem(props) {
-    const { title, description, id, tag, bcolour, handleEdit, currentNote, handleDelete, onChange, saveChanges, date } = props;
+    const { title, description, id, tag, handleEdit, currentNote, handleDelete, onChange, saveChanges, date } = props;
     const [modalOpen, setModalOpen] = useState(false);
 
     return (
