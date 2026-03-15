@@ -10,11 +10,10 @@ export default function Notes() {
   const [loading, setLoading] = useState(true);
   const [currentNote, setCurrentNote] = useState({ title: "", description: "", tag: "" });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
+useEffect(() => {
     getNotes();
     setLoading(false);
-  }, [])
+}, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDelete = (id) => {
     deleteNote(id);
