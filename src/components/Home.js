@@ -17,7 +17,7 @@ export default function Home() {
     }
     else{
       return (
-        <div className="container">
+        <div className="">
           <Login/>
         </div>
       )
@@ -25,7 +25,7 @@ export default function Home() {
   }
 
   return (
-    <div className="container">
+    <div className="">
 
       {checklogin(login)}
 
